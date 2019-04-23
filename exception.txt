@@ -1,0 +1,106 @@
+create table customer_details(cid int Primary Key ,cname varchar(20), address varchar(30)); 
+insert into customer_details values (109,'Anushka',’sit'); 
+select * from customer_details; 
+
+declare
+name varchar2(10);
+address varchar2(10);
+id number;
+begin
+name:= :c_name;
+select cid,name, address into id,name,address from customer_details where cname=name;
+dbms_output.put_line('address :'||address);
+
+Exception
+ when NO_DATA_FOUND then
+dbms_output.put_line('Not found: '||name);
+
+end;
+
+
+
+  declare
+name varchar2(10);
+address varchar2(15);
+id number;
+ID_EXCEPTION EXCEPTION;
+
+begin
+id:= :c_id;
+
+if id<=0
+then
+raise ID_EXCEPTION;
+else
+select cid,name, address into id,name,address from customer_details where cid=id;
+dbms_output.put_line('address :'||address);
+end if;
+
+Exception
+when ID_EXCEPTION then
+dbms_output.put_line('id shoud be greater than zero ');
+ when NO_DATA_FOUND then
+dbms_output.put_line('Not found: '||id);
+end;
+
+declare
+width float;
+length float;
+area float;
+begin
+width:= :c_id;
+length:=:len;
+
+if width<=0
+then
+raise ZERO_DIVIDE;
+else
+area:= length*width;
+dbms_output.put_line('area :'||area);
+end if;
+
+Exception
+when ZERO_DIVIDE then
+dbms_output.put_line('width should be greater than zero ');
+end;
+
+  
+declare
+name emp4.name%type;
+c number;
+begin
+select  name into name from emp4 where salary>40300;
+
+dbms_output.put_line('name '|| name);
+
+
+Exception
+when TOO_MANY_ROWS then
+dbms_output.put_line('aww!! snap ');
+end;
+
+
+
+declare
+id number;
+old number;
+new float;
+begin
+id:= :id;
+select salary into old from emp4 where empid=id;
+if old IS NULL then
+   RAISE_APPLICATION_ERROR(-20101, 'Salary is missing'); 
+else
+  new := old+old*0.1;
+DBMS_OUTPUT.PUT_LINE('old'|| old);
+  DBMS_OUTPUT.PUT_LINE('new'|| new);
+end if;
+   
+ 
+Exception
+ WHEN NO_DATA_FOUND THEN     
+  DBMS_OUTPUT.PUT_LINE('No data found'); 
+end;
+
+
+  

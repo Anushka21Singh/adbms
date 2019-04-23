@@ -1,0 +1,60 @@
+create or replace trigger emp_audit
+after update of salary on emp4
+for each row
+begin
+insert into emp_audit values(:old.empid,:old.salary,:new.salary,sysdate);
+end;
+
+update emp4 set salary=salary+1 where empid=1;
+
+
+create or replace trigger trig
+before insert or update or delete on emp4
+for each row
+BEGIN
+IF (to_char(sysdate,'dy')='sat' or to_char(sysdate,'dy')='sun' or to_number(to_char(sysdate.'hh24'))<10 or to_number(to_char(sysdate.'hh24'))>17)
+then
+raise_application_error(-20122,'Access Denied!!');
+
+END IF;
+END;   
+
+create or replace trigger trig
+before update of salary on emp4
+for each row
+declare
+mark_diff number;
+begin
+mark_diff := :NEW.salary - :OLD.salary; 
+dbms_output.put_line('diff: '||mark_diff);
+
+end;
+
+create or replace trigger trig11
+before update of salary on emp4
+for each row
+declare
+comm number(5):=0;
+ename emp4.name%type;
+des emp4.designation%type;
+
+begin
+if(des = 'ceo')
+then
+  comm:= :new.salary*0.2;
+end if;
+
+if(comm < 1000)
+then
+comm:=comm+1000;
+else
+comm:=comm+2000;
+end if;
+
+ename := :old.name;
+dbms_output.put_line('ename :'||ename);
+dbms_output.put_line('commision :'||comm);
+end;
+
+
+ 

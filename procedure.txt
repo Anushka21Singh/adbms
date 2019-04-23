@@ -1,0 +1,67 @@
+create or replace procedure find(id in number, name1 out varchar2)
+as
+begin
+select name into name1 from emp4 where empid=id;
+end;
+
+declare
+name emp4.name%type;
+begin
+find(1,name);
+dbms_output.put_line('name :'||name);
+end;
+
+create or replace procedure sq(side in number, res out number)
+as
+begin
+res:= side*side;
+end;
+
+declare
+result number(5);
+begin
+sq(4,result);
+dbms_output.put_line('result :'||result);
+end;
+
+create or replace procedure findi(num1 in number, num2 in number, res out number)
+as
+begin
+
+if(num1>num2)
+then
+res:=num2;
+else
+res:=num1;
+end if;
+
+end;
+
+declare 
+res number;
+begin
+findi(4,5,res);
+dbms_output.put_line('result :'||res);
+end;
+
+create or replace procedure ch(id in number)
+as
+
+begin
+
+delete from emp4 where empid=id;
+
+end;
+
+declare
+bef number(2);
+aft number(2);
+begin
+
+select count(*) into bef from emp4;
+dbms_output.put_line('before :'||bef);
+ch(1);
+select count(*) into aft from emp4;
+dbms_output.put_line('after :'||aft);
+
+end;

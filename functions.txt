@@ -1,0 +1,86 @@
+					First 100 numbers
+create or replace function sum1
+return number
+is
+s number:=0;
+num number:=0;
+i number :=0;
+Begin
+while i<100 loop
+s:=s+num;
+num:=num+2;
+i:=i+1;
+end loop;
+return s;
+end;
+
+Declare
+summ number;
+Begin
+summ:=sum1();
+dbms_output.put_line(summ);
+End;
+
+							PRIME
+create or replace function primenum(num number)
+return number
+is
+c number;
+flag number;
+Begin
+flag:=0;
+c:=2;
+while c<num loop
+if mod(num,c)=0 then
+flag:=1;
+end if;
+exit when flag=1;
+c:=c+1;
+end loop;
+return flag;
+end;
+
+Declare
+res number;
+Begin
+res:=primenum(41);
+if(res=1) then
+dbms_output.put_line('Not Prime');
+else
+dbms_output.put_line('Prime');
+end if;
+end;
+
+						MANAGER
+create or replace function mana
+return number
+is
+n number;
+begin
+select count(*) into n from emp4 where designation='ceo';
+return n;
+end;
+
+declare
+n number;
+begin
+n:=mana();
+dbms_output.put_line('result :'||n);
+end;
+
+					HIGHEST SALARY
+create or replace function high
+return varchar2
+is
+n varchar2(10);
+begin
+select name into n from emp4 where salary=(select max(salary) from emp4);
+return n;
+end;
+
+declare
+n varchar2(10);
+begin
+n:=high();
+dbms_output.put_line('result :'||n);
+end;

@@ -1,0 +1,100 @@
+declare 
+num1 number;
+num2 number;
+swap number;
+
+begin
+num1:= :num1;
+num2:= :num2;
+
+swap:=num1;
+num1:=num2;
+num2:=swap;
+
+dbms_output.put_line('num1 :'||num1);
+dbms_output.put_line('num2 :'||num2);
+end;
+
+
+declare 
+num1 number;
+num2 number;
+
+begin
+num1:= :num1;
+num2:= :num2;
+
+num1:=num1+num2;
+num2:=num1-num2;
+num1:=num1-num2;
+
+dbms_output.put_line('num1 :'||num1);
+dbms_output.put_line('num2 :'||num2);
+end;
+
+declare 
+num number;
+p number;
+res number;
+begin
+num:= :num;
+p:= :power;
+
+res:=power(num,p);
+
+
+dbms_output.put_line('res :'||res);
+end;
+
+declare
+n number;
+
+begin
+dbms_output.put_line('simple loop:');
+n:=10;
+loop
+dbms_output.put_line('num:'||n);
+n:=n-1;
+exit when n=4;
+end loop;
+
+dbms_output.put_line('for loop:');
+for i in reverse 5..10 loop
+dbms_output.put_line('num:'||i);
+end loop;
+
+dbms_output.put_line('while');
+n:=10;
+while n>4 loop
+dbms_output.put_line('num:'||n);
+n:=n-1;
+end loop;
+
+end;
+
+declare
+n number;
+
+begin
+n:= :num;
+if mod(n,2)=0 then
+dbms_output.put_line('even');
+else 
+dbms_output.put_line('odd:');
+end if;
+end;
+
+declare
+n number;
+res number:=1;
+begin
+n:= :num;
+
+while n>1 loop
+res:=res*n;
+n:=n-1;
+end loop;
+
+dbms_output.put_line('res'|| res);
+
+end;

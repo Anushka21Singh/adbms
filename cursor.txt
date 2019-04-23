@@ -1,0 +1,77 @@
+create table emp4 (empid number(4), name varchar2(10), salary number(5), designation varchar2(10), exp number(2) );
+
+insert into emp4 values(2,'anisha',2000,'cto',21);
+
+select * from emp4;
+
+declare
+cursor employee is
+select name,designation, salary from emp4 where salary>1000;
+ename emp4.name%type;
+edesg emp4.designation%type;
+salary emp4.salary%type;
+
+Begin
+open employee;
+loop
+fetch employee into ename,edesg,salary;
+
+exit when employee%notfound;
+dbms_output.put_line('ename :' || ename);
+dbms_output.put_line('edesign :' || edesg);
+end loop;
+close employee;
+end;
+
+
+declare
+cursor employee1 is
+select name from emp4 where exp>20;
+name emp4.name%type;
+
+begin
+open employee1;
+loop
+fetch employee1 into name;
+exit when employee1%notfound;
+dbms_output.put_line('name :'|| name);
+end loop;
+close employee1;
+end;
+
+
+
+declare 
+cursor employee2 is
+select name from emp4;
+name emp4.name%type;
+total number :=0;
+
+begin
+open employee2;
+loop
+fetch employee2 into name;
+exit when employee2%notfound;
+total:= total+1;
+end loop;
+dbms_output.put_line('total '||total);
+close employee2;
+end;
+
+
+declare 
+cursor employee3 is
+select empid from emp4 where exp>20;
+empid1 emp4.empid%type;
+
+begin
+open employee3;
+loop
+fetch employee3 into empid1;
+exit when employee3%notfound;
+update emp4 set salary=salary-200 where empid=empid1;
+dbms_output.put_line('empid '|| empid1);
+
+end loop;
+close employee3;
+end;
